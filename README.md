@@ -54,10 +54,10 @@ These IDs are linked from the navigation menu for smooth scrolling.
 ## Navigation Flow Diagram
 ```mermaid
 flowchart TD
-    A[Home (hero)] -->|Nav| B[Skills]
-    B -->|Nav| C[Projects]
-    C -->|Nav| D[Experience]
-    D -->|Nav| E[Contact]
+    A[Home (Hero)] -->|Navigation| B[Skills]
+    B -->|Navigation| C[Projects]
+    C -->|Navigation| D[Experience]
+    D -->|Navigation| E[Contact]
     E -->|Back to Home| A
 ```
 The diagram visualises the single‑page navigation flow where each menu link scrolls to its respective section.
