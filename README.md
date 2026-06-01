@@ -64,3 +64,10 @@ The diagram visualises the single‑page navigation flow where each menu link sc
 
 ## License
 This project is licensed under the **MIT License** – see the `LICENSE` file for details.
+
+---
+
+<div align="center">
+  <sub>Made by <a href="https://github.com/sridharSTR">sridhar manoharan</a></sub>
+</div>
+
