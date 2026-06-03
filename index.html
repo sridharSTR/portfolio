@@ -79,7 +79,7 @@
       <a class="btn btn-outline" href="mailto:sivasridhar2502@gmail.com">
         <span>Get in Touch</span>
       </a>
-      <a class="btn btn-ghost resume-download" id="resumeBtn" href="#contact" download="Sridhar_Python_Developer.pdf">
+      <a class="btn btn-ghost" id="resumeBtn" href="Sridhar_Python_Developer.pdf" download="Sridhar_Python_Developer.pdf">
         <span>Resume</span>
       </a>
     </div>
@@ -341,7 +341,7 @@
         <a class="btn btn-gold" href="mailto:sivasridhar2502@gmail.com">
           <span>Get in Touch</span>
         </a>
-        <a class="btn btn-ghost resume-download" id="resumeBtn2" href="#contact" download="Sridhar_Python_Developer.pdf">
+        <a class="btn btn-ghost" id="resumeBtn2" href="Sridhar_Python_Developer.pdf" download="Sridhar_Python_Developer.pdf">
           <span>Download Resume</span>
         </a>
       </div>
@@ -448,85 +448,7 @@ const observer = new IntersectionObserver(entries => {
 }, { threshold: 0.1 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-// Resume download is generated client-side so the static page has no missing PDF dependency.
-function escapePdfText(text) {
-  return text.replace(/\\/g, '\\\\').replace(/\(/g, '\\(').replace(/\)/g, '\\)');
-}
-
-function createResumePdfBlob() {
-  const lines = [
-    'Sridhar M',
-    'Python Full Stack Developer',
-    'Chennai, India',
-    '',
-    'Contact',
-    'Email: sivasridhar2502@gmail.com',
-    'Phone: +91 86808 50179',
-    'LinkedIn: linkedin.com/in/sridhar-engineer',
-    'GitHub: github.com/sridharSTR',
-    '',
-    'Core Skills',
-    'Python, Django, Django REST Framework, React.js, JavaScript, SQL',
-    'PostgreSQL, MySQL, SQLite, JWT Auth, REST APIs, Docker, GitHub Actions',
-    '',
-    'Featured Projects',
-    'KFC Clone - E-Commerce Food Delivery',
-    'Smart Job Tracker - Hiring Management System',
-    'Optimus - AI-Powered Productivity Platform',
-    '',
-    'Experience',
-    'Code Pilot, Chennai - Python Full Stack Development, 4-Month Intensive',
-    'Cognizant x Forage - Artificial Intelligence Virtual Experience',
-    'Electronic Arts x Forage - Software Engineering Virtual Experience',
-    '',
-    'Education',
-    'B.E. Electronics and Communication Engineering, DMI College of Engineering',
-    'CGPA 7.52 - First Class'
-  ];
-
-  const textCommands = lines.map((line, index) => {
-    const y = 760 - index * 22;
-    const size = index === 0 ? 24 : (line === '' ? 12 : 11);
-    return `BT /F1 ${size} Tf 72 ${y} Td (${escapePdfText(line)}) Tj ET`;
-  }).join('\n');
-
-  const objects = [
-    '<< /Type /Catalog /Pages 2 0 R >>',
-    '<< /Type /Pages /Kids [3 0 R] /Count 1 >>',
-    '<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 4 0 R >> >> /Contents 5 0 R >>',
-    '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>',
-    `<< /Length ${textCommands.length} >>\nstream\n${textCommands}\nendstream`
-  ];
-
-  let pdf = '%PDF-1.4\n';
-  const offsets = [0];
-  objects.forEach((object, index) => {
-    offsets.push(pdf.length);
-    pdf += `${index + 1} 0 obj\n${object}\nendobj\n`;
-  });
-  const xrefOffset = pdf.length;
-  pdf += `xref\n0 ${objects.length + 1}\n0000000000 65535 f \n`;
-  offsets.slice(1).forEach(offset => {
-    pdf += `${String(offset).padStart(10, '0')} 00000 n \n`;
-  });
-  pdf += `trailer\n<< /Size ${objects.length + 1} /Root 1 0 R >>\nstartxref\n${xrefOffset}\n%%EOF`;
-
-  return new Blob([pdf], { type: 'application/pdf' });
-}
-
-document.querySelectorAll('.resume-download').forEach(link => {
-  link.addEventListener('click', event => {
-    event.preventDefault();
-    const resumeUrl = URL.createObjectURL(createResumePdfBlob());
-    const downloadLink = document.createElement('a');
-    downloadLink.href = resumeUrl;
-    downloadLink.download = 'Sridhar_Python_Developer.pdf';
-    document.body.appendChild(downloadLink);
-    downloadLink.click();
-    downloadLink.remove();
-    setTimeout(() => URL.revokeObjectURL(resumeUrl), 1000);
-  });
-});
+// Resume links use the bundled PDF directly.
 </script>
 </body>
 </html>
